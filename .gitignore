@@ -1,0 +1,5 @@
+# Build folder
+build-uno/
+
+# YouCompleteMe binaries
+.ycm_extra_conf.pyc
