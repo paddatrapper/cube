@@ -37,8 +37,8 @@ class Parser
         int getCathodePin(Coordinate c);
         int getPin(int c, int total);
 
-        const int LED_PIN_OFFSET = 4;
-        const int LEVEL_PIN_OFFSET = 13;
+        const int LED_PIN_OFFSET = 5;
+        const int LEVEL_PIN_OFFSET = 2;
         int numRows;
         int numColumns;
         int numLevels;
