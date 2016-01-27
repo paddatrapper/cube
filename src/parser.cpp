@@ -19,24 +19,38 @@ namespace cube {
         numLevels {numLevels}
     { }
 
-    State Parser::getState(unsigned long time, Coordinate c) {
-        Vertex v {getCathodePin(c), getAnodePin(c)};
+    State Parser::getState(Coordinate c) {
+        unsigned long time {75};
+        Vertex v {getCathodePin(c), getAnodePin(c), 255};
         std::vector<Vertex> sVector {v};
         return State {time, sVector};
+    }
+
+    void Parser::addDown(double x, double y, std::vector<State>& states)
+    {
+        for (double i = 1; i > -2; i--) {
+            states.push_back(getState(Coordinate {x, y, i}));
+        }
+    }
+
+    void Parser::addUp(double x, double y, std::vector<State>& states)
+    {
+        for (double i = -1; i < 2; i++) {
+            states.push_back(getState(Coordinate {x, y, i}));
+        }
     }
 
     std::vector<State>& Parser::getStates(std::vector<State>& states)
     {
         states = std::vector<State> {};
-        for (double i = 0; i < numLevels; i++) {
-            for (double j = 0; j < numRows; j++) {
-                for (double k = 0; k < numColumns; k++) {
-                    unsigned long t {1 * 100};
-                    Coordinate c = {k, j, j};
-                    states.push_back(getState(t, c));
-                }
-            }
-        }
+        addDown(1, 0, states);
+        addUp(1, 1, states);
+        addDown(0, 1, states);
+        addUp(-1, 1, states);
+        addDown(-1, 0, states);
+        addUp(-1, -1, states);
+        addDown(0, -1, states);
+        addUp(1, -1, states);
         return states;
     }
 

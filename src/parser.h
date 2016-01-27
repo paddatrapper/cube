@@ -33,7 +33,9 @@ class Parser
         Parser(int numRows, int numColumns, int numLevels);
         std::vector<State>& getStates(std::vector<State>& states);
     private:
-        State getState(unsigned long time, Coordinate c);
+        State getState(Coordinate c);
+        void addDown(double x, double y, std::vector<State>& states);
+        void addUp(double x, double y, std::vector<State>& states);
         int getAnodePin(Coordinate c);
         int getCathodePin(Coordinate c);
         int getPin(int c, int total);
