@@ -17,26 +17,26 @@ namespace cube {
         numRows {numRows},
         numColumns {numColumns},
         numLevels {numLevels}
-    {
+    { }
+
+    State Parser::getState(unsigned long time, Coordinate c) {
+        Vertex v {getCathodePin(c), getAnodePin(c)};
+        std::vector<Vertex> sVector {v};
+        return State {time, sVector};
     }
 
     std::vector<State>& Parser::getStates(std::vector<State>& states)
     {
-        unsigned long t1 {3 * 1000};
-        Coordinate c1 = {0, 0, 0};
-        Vertex v1 {getCathodePin(c1), getAnodePin(c1)};
-        std::vector<Vertex> s1Vector {v1};
-        State s1 {t1, s1Vector};
-        
-        unsigned long t2 {3 * 1000};
-        Coordinate c2 = {1, -1, 0};
-        Coordinate c3 = {-1, 1, 0};
-        Vertex v2 {getCathodePin(c2), getAnodePin(c2)};
-        Vertex v3 {getCathodePin(c3), getAnodePin(c3)};
-        std::vector<Vertex> s2Vector {v2, v3};
-        State s2 {t2, s2Vector};
-
-        states = std::vector<State> {s1, s2};
+        states = std::vector<State> {};
+        for (double i = 0; i < numLevels; i++) {
+            for (double j = 0; j < numRows; j++) {
+                for (double k = 0; k < numColumns; k++) {
+                    unsigned long t {1 * 100};
+                    Coordinate c = {k, j, j};
+                    states.push_back(getState(t, c));
+                }
+            }
+        }
         return states;
     }
 
