@@ -11,7 +11,7 @@
 #include <Arduino.h>
 #include "cube.h"
 
-cube::Cube ledCube {1, 3};
+cube::Cube ledCube {3, 3};
 
 void setup()
 {
