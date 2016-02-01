@@ -20,7 +20,7 @@ namespace cube {
     { }
 
     State Parser::getState(Coordinate c) {
-        unsigned long time {75};
+        unsigned long time {500};
         Vertex v {getCathodePin(c), getAnodePin(c), 255};
         std::vector<Vertex> sVector {v};
         return State {time, sVector};
@@ -43,14 +43,20 @@ namespace cube {
     std::vector<State>& Parser::getStates(std::vector<State>& states)
     {
         states = std::vector<State> {};
-        addDown(1, 0, states);
-        addUp(1, 1, states);
-        addDown(0, 1, states);
-        addUp(-1, 1, states);
-        addDown(-1, 0, states);
-        addUp(-1, -1, states);
-        addDown(0, -1, states);
-        addUp(1, -1, states);
+        states.push_back(getState(Coordinate {0, 0, 0}));
+
+        Coordinate c[9];
+        int i = 0;
+        for (double j = -1; j < 2; j++) {
+            for (double k = -1; k < 2; k++) {
+                c[i++] = Coordinate {j, k, 1};
+            }
+        }
+         
+        std::vector<Vertex> v;
+        for (auto coord : c)
+            v.push_back(Vertex {getCathodePin(coord), getAnodePin(coord), 225});
+        states.push_back(State {500, v});
         return states;
     }
 
